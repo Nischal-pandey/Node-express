@@ -1,30 +1,31 @@
-const express = require('express')
-const app = express()   //using express frame work
+ //===========> USING EJS TEMPLATE RENDER METHOD DATA IN TABLR FORM
+import express from 'express'
+const app= express()
 
-app.listen(5000, ()=>{
-    console.log('successfully Connected on port 5000.')    
-})
+app.set('view engine','ejs')
 
-app.get('/', (req, res)=>{
-    res.send("we are good ")
-    
+app.get('/',(req, res)=>{
+    res.send("Home page")
 })
 
 app.get('/about',(req, res)=>{
-    res.send("<h1>nice work</h1>")
+   var users = [
+	{name:"Salman Khan",age:22,city:"Delhi"},
+	{name:"John Abrahm",age:24,city:"Mumbai"},
+	{name:"John Doe",age:29,city:"Goa"},
+	{name:"Sharukh Khan",age:55,city:"Delhi"},
+	{name:"Amitab Bachhan",age:75,city:"Agra"},
+	{name:"Sunny leone",age:44,city:"Gujrat"}
+
+];
+
+    res.render("about",{
+                        title:'Home page',
+                         message:"hello message ",
+                         items : users
+                        })
 })
-
-/* app.get('/about/user',(req, res)=>{    //user is sub route of about
-    res.send("<h1>gallery page</h1>")
-})*/
-
-app.get('/user/:userid/book/:bookid',(req, res)=>{
-    res.send(req.params)
-})
-
-app.get('/search',(req, res)=>{ // using query ?
-    const name = req.query.name
-    const age = req.query.age
-    res.send(`Search results for name : ${name}, age : ${age}`)
-    //res.send(req.query)
+app.listen(5000,()=>{
+    console.log('server started successfully ');
+    
 })
