@@ -3,6 +3,7 @@ import express from 'express'
 const app= express()
 
 app.set('view engine','ejs')
+app.use(express.urlencoded({extended: false}))
 
 app.get('/',(req, res)=>{
     res.send("Home page")
@@ -25,6 +26,18 @@ app.get('/about',(req, res)=>{
                          items : users
                         })
 })
+
+app.get('/form',(req, res) =>{
+ res.render('form',  {message: null} )
+})
+app.post('/submit',(req, res) =>{
+ const name = req.body.myname
+
+ const message = `Hello, ${name} you submitted the form`
+ res.render('form', {message: message})
+})
+
+
 app.listen(5000,()=>{
     console.log('server started successfully ');
     
